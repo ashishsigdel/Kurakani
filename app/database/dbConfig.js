@@ -15,7 +15,8 @@ const sequelize = new Sequelize(
   {
     host: dbConfig.host,
     dialect: dbConfig.dialect,
-    logging: process.env.NODE_ENV === EnvType.DEV ? console.log : false,
+    // logging: process.env.NODE_ENV === EnvType.DEV ? console.log : false,
+    logging: false,
     pool: {
       max: 5,
       min: 0,

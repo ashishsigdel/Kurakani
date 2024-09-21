@@ -15,7 +15,7 @@ const Connection = (sequelize, Sequelize, DataTypes) => {
         type: DataTypes.BIGINT,
         allowNull: false,
       },
-      conversatonId: {
+      conversationId: {
         type: DataTypes.BIGINT,
         allowNull: false,
       },
