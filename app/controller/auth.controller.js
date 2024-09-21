@@ -185,3 +185,85 @@ export const logout = asyncHandler(async (req, res) => {
     });
   }
 });
+
+export const refreshAccessToken = asyncHandler(async (req, res) => {
+  const token = getCookieToken(req) || getAuthToken(req);
+
+  if (!token) {
+    throw new ApiError({
+      message: "Unauthorized",
+      status: 401,
+    });
+  }
+
+  //verify token
+  try {
+    const decodedToken = verifyToken({
+      token: token,
+      ignoreExpiration: true,
+    });
+
+    //get refresh token from db
+    const refreshToken = await RefreshToken.findOne({
+      where: {
+        id: decodedToken.rfId,
+        userId: decodedToken.id,
+      },
+    });
+
+    if (!refreshToken) {
+      throw new ApiError({
+        message: "Unauthorized",
+        status: 401,
+      });
+    }
+
+    // verify refresh token
+    verifyToken({
+      token: refreshToken.token,
+    });
+
+    //get user from db
+    const user = await User.findOne({
+      where: { id: decodedToken.id },
+      attributes: ["id", "fullName", "username", "email", "profilePic"],
+    });
+
+    if (!user) {
+      throw new ApiError({
+        message: "Unauthorized",
+        status: 401,
+      });
+    }
+
+    //generate access token
+    const accessToken = generateAccessToken({
+      userId: user.id,
+      roles: user.roles,
+      refreshTokenId: refreshToken.id,
+    });
+
+    // replace old refresh token with new one in cookie
+    res.cookie("accessToken", `Bearer ${accessToken}`, {
+      httpOnly: true,
+      secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+    });
+
+    let responseData = {
+      accessToken,
+      user,
+    };
+
+    return new ApiResponse({
+      status: 200,
+      message: "Access token refreshed successfully",
+      data: responseData,
+    }).send(res);
+  } catch (error) {
+    logger.error(error);
+    throw new ApiError({
+      message: "Unauthorized",
+      status: 401,
+    });
+  }
+});
