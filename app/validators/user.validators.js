@@ -80,3 +80,30 @@ export const registerValidator = () => {
       }),
   ];
 };
+
+export const loginValidator = () => {
+  //validate email and password
+  return [
+    body("email")
+      .exists() // check if email exists
+      .withMessage("Email is required")
+      .bail() // stop validation chain if any of the above fails
+      .trim() // trim leading and trailing white spaces
+      .escape() // sanitize input
+      .notEmpty() // check if email is not empty
+      .withMessage("Email is required")
+      .bail() // stop validation chain if any of the above fails
+      .isEmail() // check if email is valid
+      .withMessage("Email is invalid")
+      .bail(), // stop validation chain if any of the above fails
+    body("password")
+      .exists() // check if password exists
+      .withMessage("Password is required")
+      .bail() // stop validation chain if any of the above fails
+      .trim() // trim leading and trailing white spaces
+      .escape() // sanitize input
+      .notEmpty() // check if password is not empty
+      .withMessage("Password is required")
+      .bail(), // stop validation chain if any of the above fails
+  ];
+};
