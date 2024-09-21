@@ -3,6 +3,7 @@ import refreshTokenAssociation from "./refreshToken.association.js";
 import connectionAssociation from "./connection.association.js";
 import connectionRequestAssociation from "./connectionRequest.association.js";
 import conversationAssociation from "./conversation.associaton.js";
+import messageAssociation from "./message.association.js";
 
 export default function assotiations(db) {
   userAssociation(db);
@@ -10,4 +11,5 @@ export default function assotiations(db) {
   connectionAssociation(db);
   connectionRequestAssociation(db);
   conversationAssociation(db);
+  messageAssociation(db);
 }

@@ -14,7 +14,7 @@ const messageAssociation = (db) => {
   });
 
   db.Message.belongsTo(db.Conversation, {
-    foreignKey: "conversatonId",
+    foreignKey: "conversationId",
     as: "conversation",
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
