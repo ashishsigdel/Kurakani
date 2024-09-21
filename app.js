@@ -1,8 +1,10 @@
 import express from "express";
 import { createServer } from "http";
 import cors from "cors";
+import bodyParser from "body-parser";
+
 import ApiError from "./app/utils/apiError.js";
-// import db from "./app/models/index.js";
+import APIRoute from "./app/routes/index.js";
 
 const app = express();
 
@@ -13,11 +15,12 @@ app.use(
   })
 );
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 const httpServer = createServer(app);
 
-app.get("/", (req, res) => {
-  res.json({ message: "Api Working..." });
-});
+app.use("/api/v1", APIRoute);
 
 // if route is api route, send 404 in json else render 404 page
 app.use((req, res, next) => {
