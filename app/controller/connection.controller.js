@@ -35,6 +35,20 @@ export const connectRequest = asyncHandler(async (req, res) => {
 
   let requestMessage = message || `${user.fullName} wants to connect.`;
 
+  const alreadyConnected = await Connection.findOne({
+    where: {
+      userId: user.id,
+      friendId: receiverId,
+    },
+  });
+
+  if (alreadyConnected) {
+    throw new ApiError({
+      message: "Already connected!",
+      status: 400,
+    });
+  }
+
   const alreadyRequst = await ConnectionRequest.findOne({
     where: {
       senderId: user.id,
@@ -88,7 +102,7 @@ export const acceptRequest = asyncHandler(async (req, res) => {
 
   if (receiverId !== user.id) {
     throw new ApiError({
-      status: 401,
+      status: 0,
       message: "You are not authorize to accept.",
     });
   }
@@ -138,7 +152,7 @@ export const rejectRequest = asyncHandler(async (req, res) => {
 
   if (receiverId !== user.id) {
     throw new ApiError({
-      status: 401,
+      status: 400,
       message: "You are not authorize to reject.",
     });
   }
@@ -150,3 +164,29 @@ export const rejectRequest = asyncHandler(async (req, res) => {
     message: "Request rejected.",
   }).send(res);
 });
+
+export const getRequestList = asyncHandler(async (req, res) => {
+  const user = req.user;
+
+  const allRequests = await ConnectionRequest.findAll({
+    where: {
+      receiverId: user.id,
+    },
+    attributes: ["id", "message", "createdAt"],
+    include: [
+      {
+        model: User,
+        as: "sender",
+        attributes: ["id", "fullName", "username", "email", "profilePic"],
+      },
+    ],
+  });
+
+  return new ApiResponse({
+    status: 200,
+    message: "All request fetched successfully.",
+    data: allRequests,
+  }).send(res);
+});
+
+export const getAllConnection = asyncHandler(async (req, res) => {});

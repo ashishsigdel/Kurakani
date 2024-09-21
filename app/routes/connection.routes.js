@@ -19,4 +19,12 @@ router
   .route("/reject")
   .post(authMiddleware, validate, connectionController.rejectRequest);
 
+router
+  .route("/get-all-request")
+  .get(authMiddleware, validate, connectionController.getRequestList);
+
+router
+  .route("/get-all-connections")
+  .get(authMiddleware, validate, connectionController.getAllConnection);
+
 export default router;
