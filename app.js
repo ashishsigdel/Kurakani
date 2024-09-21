@@ -1,7 +1,7 @@
 import express from "express";
 import { createServer } from "http";
 import cors from "cors";
-import ApiError from "./utils/apiError.js";
+import ApiError from "./app/utils/apiError.js";
 
 const app = express();
 
