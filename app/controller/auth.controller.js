@@ -6,6 +6,9 @@ import db from "../models/index.js";
 import {
   generateAccessToken,
   generateRefreshToken,
+  getAuthToken,
+  getCookieToken,
+  verifyToken,
 } from "../utils/jwtUtils.js";
 import { getDateAfterMinutes } from "../utils/helper.js";
 
@@ -118,4 +121,67 @@ export const login = asyncHandler(async (req, res) => {
     message: "User logged in successfully",
     data: responseData,
   }).send(res);
+});
+
+export const logout = asyncHandler(async (req, res) => {
+  const token = getCookieToken(req) || getAuthToken(req);
+
+  if (!token) {
+    throw new ApiError({
+      message: "Unauthorized",
+      status: 401,
+    });
+  }
+
+  console.log(token);
+
+  //verify token
+  try {
+    const decodedToken = verifyToken({
+      token: token,
+      ignoreExpiration: true,
+    });
+
+    //get refresh token from db
+    const refreshToken = await RefreshToken.findOne({
+      where: {
+        id: decodedToken.rfId,
+        userId: decodedToken.id,
+      },
+    });
+
+    if (!refreshToken) {
+      throw new ApiError({
+        message: "Unauthorized",
+        status: 401,
+      });
+    }
+
+    // verify refresh token
+    verifyToken({
+      token: refreshToken.token,
+    });
+
+    //delete refresh token hard from db
+    await RefreshToken.destroy({
+      where: {
+        id: refreshToken.id,
+      },
+      force: true,
+    });
+
+    //delete token from cookie
+    res.clearCookie("accessToken");
+
+    return new ApiResponse({
+      status: 200,
+      message: "Logged out successfully",
+    }).send(res);
+  } catch (error) {
+    console.log(error);
+    throw new ApiError({
+      message: "Unauthorized",
+      status: 401,
+    });
+  }
 });
