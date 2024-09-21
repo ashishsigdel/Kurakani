@@ -1,0 +1,24 @@
+const messageAssociation = (db) => {
+  db.Message.belongsTo(db.User, {
+    foreignKey: "senderId",
+    as: "sender", // Alias for the association
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+
+  db.Message.belongsTo(db.User, {
+    foreignKey: "receiverId",
+    as: "receiver", // Alias for the association
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+
+  db.Message.belongsTo(db.Conversation, {
+    foreignKey: "conversatonId",
+    as: "conversation",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+};
+
+export default messageAssociation;
