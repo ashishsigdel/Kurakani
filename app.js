@@ -2,6 +2,7 @@ import express from "express";
 import { createServer } from "http";
 import cors from "cors";
 import ApiError from "./app/utils/apiError.js";
+// import db from "./app/models/index.js";
 
 const app = express();
 
