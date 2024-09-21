@@ -189,4 +189,27 @@ export const getRequestList = asyncHandler(async (req, res) => {
   }).send(res);
 });
 
-export const getAllConnection = asyncHandler(async (req, res) => {});
+export const getAllConnection = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const allConnections = await Connection.findAll({
+    where: {
+      userId: user.id,
+    },
+    attributes: ["id", "conversationId", "lastMessageAt", "friendId"],
+    include: [
+      {
+        model: User,
+        as: "user",
+        attributes: ["id", "fullName", "username", "email", "profilePic"],
+        required: false,
+      },
+    ],
+    order: [["lastMessageAt", "DESC"]],
+  });
+
+  return new ApiResponse({
+    status: 200,
+    message: "Connection list fetched successfully.",
+    data: allConnections,
+  }).send(res);
+});

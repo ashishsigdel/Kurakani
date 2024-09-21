@@ -7,14 +7,11 @@ const userAssociation = (db) => {
     onUpdate: "CASCADE",
   });
 
-  // Many Users to Many Connection
-  db.User.belongsToMany(db.Connection, {
-    through: "user_connection", // The name of the intermediate table
-    foreignKey: "userId", // The foreign key in the "user_roles" table that references users
-    otherKey: "connectionId", // The foreign key in the "user_roles" table that references roles
-    as: "connections", // An alias for the association
-    onDelete: "CASCADE", // If a user is deleted, delete the user role as well
-    onUpdate: "CASCADE", // If a user is updated, update the user role as well
+  db.User.hasMany(db.Connection, {
+    foreignKey: "friendId",
+    as: "friends",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
   });
 
   db.User.hasMany(db.ConnectionRequest, {
@@ -27,6 +24,20 @@ const userAssociation = (db) => {
   db.User.hasMany(db.ConnectionRequest, {
     foreignKey: "receiverId",
     as: "receivedRequests",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+
+  db.User.hasMany(db.Message, {
+    foreignKey: "senderId",
+    as: "sender",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+
+  db.User.hasMany(db.Message, {
+    foreignKey: "receiverId",
+    as: "receiver",
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
   });
