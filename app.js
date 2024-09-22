@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import ApiError from "./app/utils/apiError.js";
 import APIRoute from "./app/routes/index.js";
 import cookieParser from "cookie-parser";
+import errorHandlerMiddleware from "./app/middlewares/error.middleware.js";
 
 const app = express();
 
@@ -36,6 +37,8 @@ app.use((req, res, next) => {
     ],
   });
 });
+
+app.use(errorHandlerMiddleware);
 
 export { app };
 
