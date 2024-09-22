@@ -91,7 +91,7 @@ export const sendMessage = asyncHandler(async (req, res) => {
 });
 
 export const fetchAllMessages = asyncHandler(async (req, res) => {
-  const { conversationId } = req.body;
+  const { conversationId } = req.query;
 
   const user = req.user;
 
@@ -141,5 +141,56 @@ export const fetchAllMessages = asyncHandler(async (req, res) => {
     status: 200,
     message: "All messages fetched successfully.",
     data: messagesWithStatus,
+  }).send(res);
+});
+
+export const getUserByConversationId = asyncHandler(async (req, res) => {
+  const { conversationId } = req.query;
+
+  const user = req.user;
+
+  if (!conversationId) {
+    throw new ApiError({
+      status: 400,
+      message: "Cannot find room.",
+    });
+  }
+
+  const chatRoom = await Conversation.findByPk(conversationId);
+
+  if (!chatRoom) {
+    throw new ApiError({
+      status: 400,
+      message: "Cannot find room.",
+    });
+  }
+
+  const connection = await Connection.findOne({
+    where: {
+      userId: user.id,
+      conversationId: chatRoom.id,
+    },
+    attributes: ["id", "conversationId", "friendId"],
+    include: [
+      {
+        model: User,
+        as: "user",
+        attributes: ["id", "fullName", "username", "email", "profilePic"],
+        required: false,
+      },
+    ],
+  });
+
+  if (!connection) {
+    throw new ApiError({
+      status: 400,
+      message: "You can't view message.",
+    });
+  }
+
+  return new ApiResponse({
+    status: 200,
+    message: "Friend info fetched successfully.",
+    data: connection,
   }).send(res);
 });

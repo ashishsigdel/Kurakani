@@ -12,6 +12,10 @@ router
   .post(authMiddleware, validate, messageController.sendMessage);
 
 router
+  .route("/get")
+  .get(authMiddleware, validate, messageController.getUserByConversationId);
+
+router
   .route("/")
   .get(authMiddleware, validate, messageController.fetchAllMessages);
 

@@ -23,7 +23,6 @@ export const getRandomUsers = asyncHandler(async (req, res) => {
   const userId = req.user.id;
 
   if (search) {
-    // If search query is provided, search by username or fullName
     const users = await User.findAll({
       where: {
         [Op.and]: [
@@ -48,6 +47,7 @@ export const getRandomUsers = asyncHandler(async (req, res) => {
           },
         ],
       },
+      attributes: ["id", "fullName", "username", "email", "profilePic"],
     });
 
     return new ApiResponse({
@@ -72,6 +72,7 @@ export const getRandomUsers = asyncHandler(async (req, res) => {
           [Op.notIn]: [...friendIds, userId],
         },
       },
+      attributes: ["id", "fullName", "username", "email", "profilePic"],
       order: Sequelize.literal("RAND()"), // Randomize selection
       limit: 10, // Limit to 10 users
     });

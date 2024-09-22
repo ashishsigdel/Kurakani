@@ -3,7 +3,7 @@ import ApiError from "../utils/apiError.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import db from "../models/index.js";
 
-const { User, Connection, ConnectionRequest, Conversation } = db;
+const { User, Connection, ConnectionRequest, Conversation, Op } = db;
 
 export const connectRequest = asyncHandler(async (req, res) => {
   const { message, receiverId } = req.body;
@@ -180,6 +180,7 @@ export const getRequestList = asyncHandler(async (req, res) => {
         attributes: ["id", "fullName", "username", "email", "profilePic"],
       },
     ],
+    order: [["createdAt", "DESC"]],
   });
 
   return new ApiResponse({
@@ -191,19 +192,40 @@ export const getRequestList = asyncHandler(async (req, res) => {
 
 export const getAllConnection = asyncHandler(async (req, res) => {
   const user = req.user;
+  const { search } = req.query; // Get search query from request
+
+  const whereConditions = {
+    userId: user.id,
+  };
+
+  const includeConditions = {
+    model: User,
+    as: "user",
+    attributes: ["id", "fullName", "username", "email", "profilePic"],
+  };
+
+  if (search) {
+    // Add search conditions to filter by `fullName` or `username`
+    includeConditions.where = {
+      [Op.or]: [
+        {
+          fullName: {
+            [Op.like]: `%${search}%`,
+          },
+        },
+        {
+          username: {
+            [Op.like]: `%${search}%`,
+          },
+        },
+      ],
+    };
+  }
+
   const allConnections = await Connection.findAll({
-    where: {
-      userId: user.id,
-    },
+    where: whereConditions,
     attributes: ["id", "conversationId", "lastMessageAt", "friendId"],
-    include: [
-      {
-        model: User,
-        as: "user",
-        attributes: ["id", "fullName", "username", "email", "profilePic"],
-        required: false,
-      },
-    ],
+    include: [includeConditions],
     order: [["lastMessageAt", "DESC"]],
   });
 
