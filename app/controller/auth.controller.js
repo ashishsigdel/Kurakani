@@ -133,8 +133,6 @@ export const logout = asyncHandler(async (req, res) => {
     });
   }
 
-  console.log(token);
-
   //verify token
   try {
     const decodedToken = verifyToken({

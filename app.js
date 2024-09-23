@@ -1,12 +1,12 @@
 import express from "express";
 import { createServer } from "http";
 import cors from "cors";
-import bodyParser from "body-parser";
 
 import ApiError from "./app/utils/apiError.js";
 import APIRoute from "./app/routes/index.js";
 import cookieParser from "cookie-parser";
 import errorHandlerMiddleware from "./app/middlewares/error.middleware.js";
+import setUpSocket from "./app/socket/socket.js";
 
 const app = express();
 
@@ -22,6 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const httpServer = createServer(app);
+
+const { io } = setUpSocket(httpServer);
 
 app.use("/api/v1", APIRoute);
 
