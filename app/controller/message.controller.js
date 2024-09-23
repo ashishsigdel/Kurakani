@@ -3,6 +3,8 @@ import ApiResponse from "../utils/apiResponse.js";
 import ApiError from "../utils/apiError.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import db from "../models/index.js";
+import { getReceiverSocketId } from "../socket/socket.js";
+import { io } from "../../app.js";
 
 const { User, Message, Conversation, Connection } = db;
 
@@ -82,6 +84,12 @@ export const sendMessage = asyncHandler(async (req, res) => {
       },
     }
   );
+
+  const receiverSocketId = getReceiverSocketId(receiver.id);
+
+  if (receiverSocketId) {
+    io.to(receiverSocketId).emit("newMessage", newMessage);
+  }
 
   return new ApiResponse({
     status: 200,

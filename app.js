@@ -42,6 +42,6 @@ app.use((req, res, next) => {
 
 app.use(errorHandlerMiddleware);
 
-export { app };
+export { app, io };
 
 export default httpServer;

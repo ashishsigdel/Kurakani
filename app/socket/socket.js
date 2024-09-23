@@ -2,6 +2,12 @@ import { Server } from "socket.io";
 import dotenv from "dotenv";
 dotenv.config();
 
+const userSocketMap = {};
+
+export const getReceiverSocketId = (receiverId) => {
+  return userSocketMap[receiverId];
+};
+
 const setUpSocket = (httpServer) => {
   const io = new Server(httpServer, {
     cors: {
@@ -10,8 +16,6 @@ const setUpSocket = (httpServer) => {
       credentials: true,
     },
   });
-
-  const userSocketMap = {};
 
   io.on("connection", (socket) => {
     console.log("Client connected", socket.id);
