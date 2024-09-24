@@ -18,20 +18,15 @@ const setUpSocket = (httpServer) => {
   });
 
   io.on("connection", (socket) => {
-    console.log("Client connected", socket.id);
-
     const userId = socket.handshake.query.userId;
 
     if (userId) {
       userSocketMap[userId] = socket.id;
     }
 
-    console.log("User socket data: ", userSocketMap);
-
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
     socket.on("disconnect", () => {
-      console.log("Client disconnected", socket.id);
       delete userSocketMap[userId];
       io.emit("getOnlineUsers", Object.keys(userSocketMap));
     });
