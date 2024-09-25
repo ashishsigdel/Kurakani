@@ -30,6 +30,23 @@ const setUpSocket = (httpServer) => {
       delete userSocketMap[userId];
       io.emit("getOnlineUsers", Object.keys(userSocketMap));
     });
+
+    socket.on("isTyping", (data) => {
+      const receiverSocketId = getReceiverSocketId(data.receiverId);
+      io.to(receiverSocketId).emit("typing", {
+        chatId: data.chatId,
+        friendId: data.userId,
+        typing: true,
+      });
+    });
+    socket.on("notTyping", (data) => {
+      const receiverSocketId = getReceiverSocketId(data.receiverId);
+      io.to(receiverSocketId).emit("typing", {
+        chatId: data.chatId,
+        friendId: data.userId,
+        typing: false,
+      });
+    });
   });
 
   return { io };
