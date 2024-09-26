@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "text": "Hello! How are you?",
+    "sender": "received",
+    "timestamp": "2024-09-20T10:00:00Z"
+  },
+  {
+    "id": 2,
+    "text": "I'm doing well, thanks! How about you?",
+    "sender": "sent",
+    "timestamp": "2024-09-20T10:01:00Z"
+  },
+  {
+    "id": 3,
+    "text": "I'm good too. What's up?",
+    "sender": "received",
+    "timestamp": "2024-09-20T10:02:00Z"
+  },
+  {
+    "id": 4,
+    "text": "Just working on a project. How about you?",
+    "sender": "sent",
+    "timestamp": "2024-09-20T10:03:00Z"
+  },
+  {
+    "id": 5,
+    "text": "Same here! It's been quite hectic.",
+    "sender": "received",
+    "timestamp": "2024-09-20T10:04:00Z"
+  },
+  {
+    "id": 6,
+    "text": "I can imagine. Any weekend plans?",
+    "sender": "sent",
+    "timestamp": "2024-09-20T10:05:00Z"
+  },
+  {
+    "id": 7,
+    "text": "Not really, just planning to relax. You?",
+    "sender": "received",
+    "timestamp": "2024-09-20T10:06:00Z"
+  },
+  {
+    "id": 8,
+    "text": "Might catch up on some reading. Any book recommendations?",
+    "sender": "sent",
+    "timestamp": "2024-09-20T10:07:00Z"
+  },
+  {
+    "id": 9,
+    "text": "Yes, you should check out 'Atomic Habits' by James Clear.",
+    "sender": "received",
+    "timestamp": "2024-09-20T10:08:00Z"
+  },
+  {
+    "id": 10,
+    "text": "Oh, I've heard good things about that one! Adding it to my list.",
+    "sender": "sent",
+    "timestamp": "2024-09-20T10:09:00Z"
+  },
+  {
+    "id": 11,
+    "text": "Do let me know how you like it!",
+    "sender": "received",
+    "timestamp": "2024-09-20T10:10:00Z"
+  },
+  {
+    "id": 12,
+    "text": "Definitely will. Have you read anything else recently?",
+    "sender": "sent",
+    "timestamp": "2024-09-20T10:11:00Z"
+  },
+  {
+    "id": 13,
+    "text": "Yeah, I finished 'The Alchemist' a few days ago. It's a classic.",
+    "sender": "received",
+    "timestamp": "2024-09-20T10:12:00Z"
+  },
+  {
+    "id": 14,
+    "text": "Oh wow, that's on my list too! Seems like I have a lot of reading to do.",
+    "sender": "sent",
+    "timestamp": "2024-09-20T10:13:00Z"
+  },
+  {
+    "id": 15,
+    "text": "Haha, take your time! It’s worth it though.",
+    "sender": "received",
+    "timestamp": "2024-09-20T10:14:00Z"
+  },
+  {
+    "id": 16,
+    "text": "For sure! I'll start with 'Atomic Habits'.",
+    "sender": "sent",
+    "timestamp": "2024-09-20T10:15:00Z"
+  },
+  {
+    "id": 17,
+    "text": "Great choice!",
+    "sender": "received",
+    "timestamp": "2024-09-20T10:16:00Z"
+  },
+  {
+    "id": 18,
+    "text": "Talk to you later?",
+    "sender": "sent",
+    "timestamp": "2024-09-20T10:17:00Z"
+  },
+  {
+    "id": 19,
+    "text": "Sure, have a great day!",
+    "sender": "received",
+    "timestamp": "2024-09-20T10:18:00Z"
+  },
+  {
+    "id": 20,
+    "text": "Thanks, you too!",
+    "sender": "sent",
+    "timestamp": "2024-09-20T10:19:00Z"
+  },
+  {
+    "id": 21,
+    "text": "Hey, are you free to chat?",
+    "sender": "received",
+    "timestamp": "2024-09-21T11:00:00Z"
+  },
+  {
+    "id": 22,
+    "text": "Yeah, just a moment. What's up?",
+    "sender": "sent",
+    "timestamp": "2024-09-21T11:01:00Z"
+  },
+  {
+    "id": 23,
+    "text": "I needed some help with a coding issue I'm stuck on.",
+    "sender": "received",
+    "timestamp": "2024-09-21T11:02:00Z"
+  },
+  {
+    "id": 24,
+    "text": "Sure! Let me know the details, and I'll see what I can do.",
+    "sender": "sent",
+    "timestamp": "2024-09-21T11:03:00Z"
+  },
+  {
+    "id": 25,
+    "text": "I'm trying to implement a chat app. The messages aren't displaying properly.",
+    "sender": "received",
+    "timestamp": "2024-09-21T11:04:00Z"
+  },
+  {
+    "id": 26,
+    "text": "Ah, I’ve worked on something similar. Have you checked the component structure?",
+    "sender": "sent",
+    "timestamp": "2024-09-21T11:05:00Z"
+  },
+  {
+    "id": 27,
+    "text": "Not really. Can you guide me through?",
+    "sender": "received",
+    "timestamp": "2024-09-21T11:06:00Z"
+  },
+  {
+    "id": 28,
+    "text": "Sure! First, check how you're passing props to the message component.",
+    "sender": "sent",
+    "timestamp": "2024-09-21T11:07:00Z"
+  },
+  {
+    "id": 29,
+    "text": "Got it! Let me try that and get back to you.",
+    "sender": "received",
+    "timestamp": "2024-09-21T11:08:00Z"
+  },
+  {
+    "id": 30,
+    "text": "No problem! Take your time.",
+    "sender": "sent",
+    "timestamp": "2024-09-21T11:09:00Z"
+  }
+]
